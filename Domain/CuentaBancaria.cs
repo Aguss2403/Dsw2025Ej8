@@ -2,121 +2,72 @@
 
 public class CuentaBancaria
 {
-    private TipoCuenta _tipo;
-    private string _numero;
-    private decimal _saldo;
-    private Estado _estado;
-    private decimal _tasaDeInteres;
-    private decimal _limiteDeDescubierto;
-    private decimal _comision;
-    private string[] _titulares;
 
-    public CuentaBancaria(string numero, decimal saldo, TipoCuenta tipo, string[] titulares)
+    public string numero { get; }
+    protected decimal saldo { get; set; }
+    protected Estado estado { get; set; }
+    protected decimal tasaDeInteres { get; init; }
+    protected decimal limiteDeDescubierto { get; set; }
+    
+    protected string[] titulares { get; set; }
+
+    public CuentaBancaria(string numero, decimal saldo, string[] titulares, int tipo)
     {
-        _numero = numero;
-        _saldo = saldo;
-        _tipo = tipo;
-        _estado = Estado.Activa;
-        _titulares = titulares;
-    }
-    #region Getters/Setters
-    public string GetNumero()
-    {
-        return _numero;
+        this.numero = numero;
+        this.saldo = saldo;
+        this.estado = Estado.Activa;
+        this.titulares = titulares;
+    
     }
 
-    public decimal GetSaldo()
-    {
-        return _saldo;
-    }
-    public TipoCuenta GetTipo()
-    {
-        return _tipo;
-    }
 
-    public Estado GetEstado()
+    public virtual void Depositar(decimal monto)
     {
-        return _estado;
-    }
-
-    public void SetEstado(Estado estado)
-    {
-        _estado = estado;
-    }
-
-    public decimal GetTasaDeInteres()
-    {
-        return _tasaDeInteres;
-    }
-
-    public void SetTasaDeInteres(decimal tasaDeInteres)
-    {
-        _tasaDeInteres = tasaDeInteres;
-    }
-
-    public decimal GetLimiteDeDescubierto()
-    {
-        return _limiteDeDescubierto;
-    }
-
-    public void SetLimiteDeDescubierto(decimal limiteDeDescubierto)
-    {
-        _limiteDeDescubierto = limiteDeDescubierto;
-    }
-
-    public decimal GetComision()
-    {
-        return _comision;
-    }
-
-    public void SetComision(decimal comision)
-    {
-        _comision = comision;
-    }
-
-    public string[] GetTitulares()
-    {
-        return _titulares;
-    }
-    #endregion
-
-    public void Depositar(decimal monto)
-    {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
+        try
         {
-            _saldo += monto;
-        }
-        else if (_tipo == TipoCuenta.CuentaCorriente)
-        {
-            monto -= monto * _comision;
-            _saldo += monto;
-        }
-    }
-
-    public void Retirar(decimal monto)
-    {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
-        {
-            _saldo -= monto;
-        }
-        else if (_tipo == TipoCuenta.CuentaCorriente)
-        {
-            if (_saldo - monto >= -_limiteDeDescubierto)
+            if (monto <= 0)
             {
-                _saldo -= monto;
+                throw new MontoNoValido();
             }
-            if (_saldo < 0)
-            {
-                _estado = Estado.Suspendida;
-            }
+            saldo += monto;
+        }
+        catch (MontoNoValido ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
-    public void AplicarInteres()
+    public virtual void Retirar(decimal monto)
     {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
+        try
         {
-            _saldo += _saldo * _tasaDeInteres;
+            if (monto <= 0)
+            {
+                throw new MontoNoValido();
+            }
+            if (monto > saldo + limiteDeDescubierto)
+            {
+                throw new SaldoInsuficiente();
+            }
+            saldo -= monto;
+            throw new RetiroExitoso(monto, saldo);
+        }
+        catch (MontoNoValido ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (SaldoInsuficiente ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (RetiroExitoso ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
+    public decimal ConsultarSaldo()
+    {
+        return saldo;
+    }
+
 }

@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Dsw2025Ej8.Domain
+{
+
+    internal class CuentaCorriente : CuentaBancaria
+    {
+        protected decimal comision { get; set; }
+        public CuentaCorriente(string numero, decimal saldo, string[] titulares, int tipo = 2, decimal comision = 0.02m) : base(numero, saldo, titulares, tipo)
+        {
+            this.comision = comision;
+        }
+
+        public override void Depositar(decimal monto)
+        {
+            try
+            {
+                if (monto <= 0)
+                {
+                    throw new MontoNoValido();
+
+                }
+                monto -= monto * comision;
+                saldo += monto;
+                throw new DepositoExitoso(monto, saldo);
+
+            }
+            catch (MontoNoValido ex){Console.WriteLine(ex.Message);}
+            catch (DepositoExitoso ex){Console.WriteLine(ex.Message);}
+
+        }
+
+    }
+}

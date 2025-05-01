@@ -2,6 +2,10 @@
 ## Desarrollo de Software
 ### Herencia y propiedades
 
+53452 - Sanchez, Lautaro Valentin - Lautaro.Sanchez@alu.frt.utn.edu.ar 
+56687 - Villanueva Medina, Leandro Agustín - Leandro.Villanueva@alu.frt.utn.edu.ar 
+53431 - Román, Iara Belen - Iara.Roman@alu.frt.utn.edu.ar
+
 1. Realizar una bifurcación (fork) del [repositorio](https://github.com/ing-software-frt-utn/dsw2025ej8)
 2. Crear una rama de larga duración development
 3. Clonar el repositorio bifurcado y trabajar sobre la rama development
