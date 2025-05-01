@@ -14,26 +14,18 @@ namespace Dsw2025Ej8.Domain
         {
             this.comision = comision;
             this.tipo = tipo;
-
         }
 
-        public override void Depositar(decimal monto)
+        public override bool Depositar(decimal monto, bool flag = false)
         {
-            try
+            if (monto <= 0)
             {
-                if (monto <= 0)
-                {
-                    throw new MontoNoValido();
-
-                }
-                monto -= monto * comision;
-                saldo += monto;
-                throw new DepositoExitoso(monto, saldo);
+                throw new MontoNoValido();
 
             }
-            catch (MontoNoValido ex){Console.WriteLine(ex.Message);}
-            catch (DepositoExitoso ex){Console.WriteLine(ex.Message);}
-
+            monto -= monto * comision;
+            saldo += monto;
+            return flag = true;
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,64 +13,62 @@ namespace Dsw2025Ej8.View
     {
         public static void Run()
         {
-            int option = 1;
+            int option;
             do
             {
-                Console.WriteLine("Bienvenido al sistema de cuentas bancarias");
+                Console.Clear();
+                Console.WriteLine("|-----------BIENVENIDO AL SISTEMA DE CUENTAS BANCARIAS-----------| ");
                 Console.WriteLine("Seleccione una opción:");
-                Console.WriteLine("1. Realizar un Deposito");
-                Console.WriteLine("2. Realizar un Retiro");
-                Console.WriteLine("3. Consultar saldo de Cuenta en Particular");
-                Console.WriteLine("4. Consultar saldo de las Cuentas");
+                Console.WriteLine("1. Realizar un Deposito.");
+                Console.WriteLine("2. Realizar un Retiro.");
+                Console.WriteLine("3. Consultar Resumen de las Cuentas.");
                 Console.WriteLine("0. Salir");
-                ConsoleKeyInfo tecla = Console.ReadKey(true);
-                
-                switch (tecla.Key)
+                option = Convert.ToInt32(Console.ReadLine());
+
+                switch (option)
                 {
-                    case ConsoleKey.D1:
+                    case 1:
                         Console.Clear();
-                        Console.WriteLine("Ingresar Número de Cuenta: ");
+                        Console.WriteLine("|---------------------REALIZAR DEPÓSITO---------------------|");
+                        Console.WriteLine(">Ingresar Número de Cuenta: ");
                         string number = Console.ReadLine();
-                        Console.Clear();
-                        Console.WriteLine("Ingresar Monto a Depositar: ");
+                        Console.WriteLine(">Ingresar Monto a Depositar: ");
                         decimal monto = Convert.ToDecimal(Console.ReadLine());
                         Console.Clear();
                         Controller.Controlador.Depositar(number, monto);
-                        Run();
+                        Console.ReadKey();
                         break;
-                    case ConsoleKey.D2:
+                    case 2:
                         Console.Clear();
-                        Console.WriteLine("Ingresar Número de Cuenta: ");
+                        Console.WriteLine("|----------------------REALIZAR RETIRO---------------------|");
+                        Console.WriteLine(">Ingresar Número de Cuenta: ");
                         number = Console.ReadLine();
-                        Console.Clear();
-                        Console.WriteLine("Ingresar Monto a Retirar: ");
+                        Console.WriteLine(">Ingresar Monto a Retirar: ");
                         monto = Convert.ToDecimal(Console.ReadLine());
                         Console.Clear();
                         Controller.Controlador.Retirar(number, monto);
-
+                        Console.ReadKey();
                         break;
-                    case ConsoleKey.D3:
+                    case 3:
                         Console.Clear();
+                        Console.WriteLine("|----------------------RESUMEN DE CUENTAS---------------------|");
                         Controlador.ConsultarResumen();
-
+                        Console.ReadKey();
                         break;
-                    case ConsoleKey.D4:
+                    case 0:
                         Console.Clear();
-                        Thread.Sleep(500);
-                        break;
-                    case ConsoleKey.D0:
-                        Console.WriteLine("Saliendo del sistema...");
-                        option = 0;
-                        Thread.Sleep(500);
-                        Environment.Exit(0);
+                        Console.Write("Saliendo del sistema");
+                        for(int i = 0; i < 3; i++)
+                        {
+                            Console.Write(".");
+                            Thread.Sleep(600);
+                        }
                         break;
                     default:
                         Console.WriteLine("Opción no válida.");
                         break;
                 }
-            } while (option == 0);
-            
+            } while (option != 0);   
         }
-
     }
 }

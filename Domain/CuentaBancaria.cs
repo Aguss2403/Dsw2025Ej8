@@ -4,7 +4,7 @@ public class CuentaBancaria
 {
 
     public string numero { get; }
-    public decimal saldo { get; set; }
+    public decimal saldo { get; protected set; }
     public Estado estado { get; set; }
     public decimal tasaDeInteres { get; init; }
     public decimal limiteDeDescubierto { get; set; }
@@ -20,51 +20,44 @@ public class CuentaBancaria
     
     }
 
-
-    public virtual void Depositar(decimal monto)
+    public virtual bool Depositar(decimal monto, bool flag = false)
     {
-        try
+        if ( estado == Estado.Activa)
         {
             if (monto <= 0)
             {
                 throw new MontoNoValido();
             }
             saldo += monto;
+            return flag = true;
         }
-        catch (MontoNoValido ex)
+        else
         {
-            Console.WriteLine(ex.Message);
+            throw new CuentaInactiva(numero);
         }
     }
 
-    public virtual void Retirar(decimal monto)
+    public bool Retirar(decimal monto, bool flag = false)
     {
-        try
+        if (estado == Estado.Inactiva)
+            throw new CuentaInactiva(numero);
+
+        if (monto <= 0)
+            throw new MontoNoValido();
+
+        if (monto > saldo + limiteDeDescubierto)
+            throw new SaldoInsuficiente();
+
+        saldo -= monto;
+
+        if (saldo <= 0)
         {
-            if (monto <= 0)
-            {
-                throw new MontoNoValido();
-            }
-            if (monto > saldo + limiteDeDescubierto)
-            {
-                throw new SaldoInsuficiente();
-            }
-            saldo -= monto;
-            throw new RetiroExitoso(monto, saldo);
+            estado = Estado.Suspendida;
+            throw new CuentaSuspendida(numero);
         }
-        catch (MontoNoValido ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        catch (SaldoInsuficiente ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        catch (RetiroExitoso ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        return flag = true;
     }
+
     public decimal ConsultarSaldo()
     {
         return saldo;

@@ -13,6 +13,12 @@ namespace Dsw2025Ej8.Domain
         {
         }
     }
+    public class CuentaSuspendida : Exception
+    {
+        public CuentaSuspendida(string numero) : base($"La cuenta Número: {numero}, ha sido suspendida por saldo negativo o igual a 0.")
+        {
+        }
+    }
     public class CuentaNoActiva : Exception
     {
         public CuentaNoActiva() : base("La cuenta no está activa.")
@@ -25,15 +31,15 @@ namespace Dsw2025Ej8.Domain
         {
         }
     }
-    public class DepositoExitoso(decimal monto, decimal saldo) : Exception($"Se ha realizado el deposito con éxito, el monto depositado es: {monto}. Nuevo saldo: {saldo}")
-    {
-    }
-    public class RetiroExitoso(decimal monto, decimal saldo) : Exception($"Se ha realizado el retiro con éxito, el monto retirado es: {monto}. Nuevo saldo: {saldo}")
-    {
-    }
     public class NumeroDeCuentaNoValido : Exception
     {
         public NumeroDeCuentaNoValido() : base("El número de cuenta no es válido.")
+        {
+        }
+    }
+    public class CuentaInactiva : Exception
+    {
+        public CuentaInactiva(string numero) : base($"La cuenta número {numero} está inactiva.")
         {
         }
     }
