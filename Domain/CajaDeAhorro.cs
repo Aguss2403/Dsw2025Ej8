@@ -8,13 +8,14 @@ namespace Dsw2025Ej8.Domain
 {
     internal class CajaDeAhorro : CuentaBancaria
     {
-       
 
-        public CajaDeAhorro(string numero, decimal saldo, string[] titulares, int tipo = 1) : base(numero, saldo, titulares, tipo)
+        public CajaDeAhorro(string numero, decimal saldo, string[] titulares, TipoCuenta tipo = TipoCuenta.CajaDeAhorro) : base(numero, saldo, titulares, tipo)
         {
             this.saldo = saldo;
             this.estado = Estado.Activa;
             this.titulares = titulares;
+            this.tipo = tipo;
+
         }
 
         public override void Depositar(decimal monto)

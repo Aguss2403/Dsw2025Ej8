@@ -12,7 +12,7 @@ namespace Dsw2025Ej8.Controller
         private static List<CuentaBancaria> cuentas = new List<CuentaBancaria> { };
         public static void Inicializar()
         {
-            Domain.Persistencia.Inicializar();
+            Persistencia.Inicializar();
             cuentas.AddRange(Persistencia.GetCuentas());
         }
 
@@ -22,6 +22,7 @@ namespace Dsw2025Ej8.Controller
             {
                 foreach (var cuenta in cuentas)
                 {
+                    Console.WriteLine(cuenta.numero);
                     if (cuenta.numero == number)
                     {
                         cuenta.Depositar(monto);
@@ -55,6 +56,14 @@ namespace Dsw2025Ej8.Controller
                 Console.WriteLine(ex.Message);
             }
 
+        }
+
+        public static void ConsultarResumen()
+        {
+            foreach(var cuenta in cuentas)
+            {
+                Console.WriteLine($"Número de Cuenta: {cuenta.numero}, Tipo de Cuenta: {cuenta.tipo.ToString()}, Estado: {cuenta.estado}, Saldo: {cuenta.saldo}");
+            }
         }
 
 

@@ -7,8 +7,8 @@ namespace Dsw2025Ej8
     {
         static void Main(string[] args)
         {
-            Controller.Controlador.Inicializar();
-            View.Menu.Run();
+            Controlador.Inicializar();
+            Menu.Run();
 
         }
     }

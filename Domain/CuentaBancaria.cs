@@ -4,14 +4,14 @@ public class CuentaBancaria
 {
 
     public string numero { get; }
-    protected decimal saldo { get; set; }
-    protected Estado estado { get; set; }
-    protected decimal tasaDeInteres { get; init; }
-    protected decimal limiteDeDescubierto { get; set; }
-    
-    protected string[] titulares { get; set; }
+    public decimal saldo { get; set; }
+    public Estado estado { get; set; }
+    public decimal tasaDeInteres { get; init; }
+    public decimal limiteDeDescubierto { get; set; }
+    public string[] titulares { get; set; }
+    public TipoCuenta tipo{ get; set; }
 
-    public CuentaBancaria(string numero, decimal saldo, string[] titulares, int tipo)
+    public CuentaBancaria(string numero, decimal saldo, string[] titulares, TipoCuenta tipo)
     {
         this.numero = numero;
         this.saldo = saldo;

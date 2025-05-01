@@ -13,9 +13,9 @@ namespace Dsw2025Ej8.Domain
         public static void Inicializar()
         {
             cuentas.Add(new CajaDeAhorro("1", 10000, new[] { "Juan", "Maria" }));
-            cuentas.Add(new CuentaCorriente("2", 1000, new[] { "Juan", "Maria" }, comision: 3));
+            cuentas.Add(new CuentaCorriente("2", 1000, new[] { "Juan", "Maria" }));
             cuentas.Add(new CajaDeAhorro("3", 1000, new[] { "Juan", "Maria" }));
-            cuentas.Add(new CuentaCorriente("4", 1000, new[] { "Juan", "Maria" }, comision: 3));
+            cuentas.Add(new CuentaCorriente("4", 1000, new[] { "Juan", "Maria" }, comision: 0.3m));
         }
         public static List<CuentaBancaria> GetCuentas()
         {
