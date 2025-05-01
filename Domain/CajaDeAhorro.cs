@@ -10,10 +10,10 @@ namespace Dsw2025Ej8.Domain
     {
         public CajaDeAhorro(string numero, decimal saldo, string[] titulares, TipoCuenta tipo = TipoCuenta.CajaDeAhorro) : base(numero, saldo, titulares, tipo)
         {
-            this.saldo = saldo;
-            this.estado = Estado.Activa;
-            this.titulares = titulares;
-            this.tipo = tipo;
+            this.Saldo = saldo;
+            this.Estado = Estado.Activa;
+            this.Titulares = titulares;
+            this.Tipo = tipo;
         }
     }
 }

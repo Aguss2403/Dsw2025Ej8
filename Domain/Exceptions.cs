@@ -9,7 +9,7 @@ namespace Dsw2025Ej8.Domain
 {
      public class MontoNoValido : Exception
     {
-        public MontoNoValido() : base("El monto no es válido.")
+        public MontoNoValido() : base("El monto ingresado no es válido para la operación solicitada.")
         {
         }
     }
@@ -21,25 +21,19 @@ namespace Dsw2025Ej8.Domain
     }
     public class CuentaNoActiva : Exception
     {
-        public CuentaNoActiva() : base("La cuenta no está activa.")
+        public CuentaNoActiva(Estado estado) : base($"No se puede operar con la cuenta {estado}")
         {
         }
     }
     public class SaldoInsuficiente : Exception
     {
-        public SaldoInsuficiente() : base("El saldo es insuficiente para realizar la operación.")
+        public SaldoInsuficiente() : base("La cuenta no cuenta con saldo para la operación solicitada. Fue suspendida.")
         {
         }
     }
     public class NumeroDeCuentaNoValido : Exception
     {
         public NumeroDeCuentaNoValido() : base("El número de cuenta no es válido.")
-        {
-        }
-    }
-    public class CuentaInactiva : Exception
-    {
-        public CuentaInactiva(string numero) : base($"La cuenta número {numero} está inactiva.")
         {
         }
     }

@@ -3,64 +3,73 @@
 public class CuentaBancaria
 {
 
-    public string numero { get; }
-    public decimal saldo { get; protected set; }
-    public Estado estado { get; set; }
-    public decimal tasaDeInteres { get; init; }
-    public decimal limiteDeDescubierto { get; set; }
-    public string[] titulares { get; set; }
-    public TipoCuenta tipo{ get; set; }
+    public string Numero { get; }
+    public decimal Saldo { get; protected set; }
+    public Estado Estado { get; set; }
+    public decimal TasaDeInteres { get; init; }
+    public decimal LimiteDeDescubierto { get; init; }
+    public string[] Titulares { get; set; }
+    public TipoCuenta Tipo{ get; set; }
 
     public CuentaBancaria(string numero, decimal saldo, string[] titulares, TipoCuenta tipo)
     {
-        this.numero = numero;
-        this.saldo = saldo;
-        this.estado = Estado.Activa;
-        this.titulares = titulares;
+        this.Numero = numero;
+        this.Saldo = saldo;
+        this.Estado = Estado.Activa;
+        this.Titulares = titulares;
     
     }
 
     public virtual bool Depositar(decimal monto, bool flag = false)
     {
-        if ( estado == Estado.Activa)
+        if ( Estado == Estado.Activa)
         {
             if (monto <= 0)
             {
                 throw new MontoNoValido();
             }
-            saldo += monto;
+            Saldo += monto;
             return flag = true;
         }
         else
         {
-            throw new CuentaInactiva(numero);
+            throw new CuentaNoActiva(Estado);
         }
     }
 
     public bool Retirar(decimal monto, bool flag = false)
     {
-        if (estado == Estado.Inactiva)
-            throw new CuentaInactiva(numero);
-
-        if (monto <= 0)
-            throw new MontoNoValido();
-
-        if (monto > saldo + limiteDeDescubierto)
-            throw new SaldoInsuficiente();
-
-        saldo -= monto;
-
-        if (saldo <= 0)
+        if (Estado == Estado.Inactiva || Estado == Estado.Suspendida)
         {
-            estado = Estado.Suspendida;
-            throw new CuentaSuspendida(numero);
+            throw new CuentaNoActiva(Estado);
+
         }
-        return flag = true;
+        else if (monto <= 0)
+        {
+            throw new MontoNoValido();
+        }
+        else if (monto > Saldo + LimiteDeDescubierto)
+        {
+            throw new SaldoInsuficiente();
+        }
+        else
+        {
+            Saldo -= monto;
+
+            if (Saldo <= 0)
+            {
+                Estado = Estado.Suspendida;
+                throw new CuentaSuspendida(Numero);
+            }
+            return flag = true;
+        }
+
+            
     }
 
     public decimal ConsultarSaldo()
     {
-        return saldo;
+        return Saldo;
     }
 
 }

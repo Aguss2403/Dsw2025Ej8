@@ -68,7 +68,7 @@ namespace Dsw2025Ej8.View
                         Console.WriteLine("Opción no válida.");
                         break;
                 }
-            } while (option != 0);   
+            } while (option != 0);
         }
     }
 }
