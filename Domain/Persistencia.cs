@@ -12,10 +12,10 @@ namespace Dsw2025Ej8.Domain
         private static List<CuentaBancaria> cuentas = new List<CuentaBancaria>();
         public static void Inicializar()
         {
-            cuentas.Add(new CajaDeAhorro("1", 10000, new[] { "Juan", "Maria" }) { TasaDeInteres = 0.05m });
-            cuentas.Add(new CuentaCorriente("2", 1000, new[] { "Juan", "Maria" }) { LimiteDeDescubierto = 1000 });
-            cuentas.Add(new CajaDeAhorro("3", 1000, new[] { "Juan", "Maria" }) { TasaDeInteres = 0.06m });
-            cuentas.Add(new CuentaCorriente("4", 1000, new[] { "Juan", "Maria" }, comision: 0.3m) { LimiteDeDescubierto = 1500 });
+            cuentas.Add(new CajaDeAhorro("1", 10000, new[] { "Lautaro Sanchez" }) { TasaDeInteres = 0.05m });
+            cuentas.Add(new CuentaCorriente("2", 1000, new[] { "Iara Román" }) { LimiteDeDescubierto = 1000 });
+            cuentas.Add(new CajaDeAhorro("3", 1000, new[] { "Leandro Villanueva" }) { TasaDeInteres = 0.06m });
+            cuentas.Add(new CuentaCorriente("4", 1000, new[] { "Santiago Romano", "Leopoldo Samaniego" }, comision: 0.3m) { LimiteDeDescubierto = 1500 });
         }
         public static List<CuentaBancaria> GetCuentas()
         {

@@ -24,12 +24,15 @@ public class CuentaBancaria
     {
         if ( Estado == Estado.Activa)
         {
-            if (monto <= 0)
+            if ((monto <= 0) == false)
+            {
+                Saldo += monto;
+                return flag = true;
+            }
+            else
             {
                 throw new MontoNoValido();
             }
-            Saldo += monto;
-            return flag = true;
         }
         else
         {
