@@ -4,8 +4,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Dsw2025Ej8.Domain;
 
-namespace Dsw2025Ej8.Domain
+namespace Dsw2025Ej8.Data
 {
     internal static class Persistencia
     {
