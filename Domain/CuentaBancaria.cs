@@ -53,6 +53,7 @@ public class CuentaBancaria
         }
         else if (monto > Saldo + LimiteDeDescubierto)
         {
+            Estado = Estado.Suspendida;
             throw new SaldoInsuficiente();
         }
         else
