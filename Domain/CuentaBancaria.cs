@@ -1,4 +1,6 @@
-﻿namespace Dsw2025Ej8.Domain;
+﻿using Dsw2025Ej8.Externals;
+
+namespace Dsw2025Ej8.Domain;
 
 public class CuentaBancaria
 {
@@ -82,33 +84,38 @@ public class CuentaBancaria
 
     public void Depositar(decimal monto)
     {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
+        if (_estado is Estado.Activa)
         {
             _saldo += monto;
         }
-        else if (_tipo == TipoCuenta.CuentaCorriente)
+        else
         {
-            monto -= monto * _comision;
-            _saldo += monto;
+            throw new InvalidOperationException("Tipo de cuenta no soportado para depósito.");
         }
     }
 
-    public void Retirar(decimal monto)
+    public void Retirar(decimal monto, IInformarRetiro[] sistemasExternos)
     {
         if (_tipo == TipoCuenta.CajaDeAhorro)
         {
-            _saldo -= monto;
+            _saldo += monto;
         }
         else if (_tipo == TipoCuenta.CuentaCorriente)
         {
             if (_saldo - monto >= -_limiteDeDescubierto)
             {
-                _saldo -= monto;
+                _saldo += monto;
             }
             if (_saldo < 0)
             {
                 _estado = Estado.Suspendida;
             }
+
+        }
+        if (sistemasExternos.Length == 0) return;
+        foreach (var sistema in sistemasExternos)
+        {
+            sistema.InformarRetiro(_numero, monto);
         }
     }
 
@@ -119,4 +126,28 @@ public class CuentaBancaria
             _saldo += _saldo * _tasaDeInteres;
         }
     }
+
+    public void Retirar1(decimal monto, IAgenciaAntiFraude sistemasExternos)
+    {
+        if (_tipo == TipoCuenta.CajaDeAhorro)
+        {
+            _saldo += monto;
+        }
+        else if (_tipo == TipoCuenta.CuentaCorriente)
+        {
+            if (_saldo - monto >= -_limiteDeDescubierto)
+            {
+                _saldo += monto;
+            }
+            if (_saldo < 0)
+            {
+                _estado = Estado.Suspendida;
+            }
+
+        }
+        
+            sistemasExternos.InformarRetiro(_numero, monto);
+        
+    }
+
 }
